@@ -3,7 +3,8 @@
 Helps you create a kitchensink incl. route, template and services.
 
 [![Build Status](https://scrutinizer-ci.com/g/bestit/symfony-kitchensink-bundle/badges/build.png?b=master)](https://scrutinizer-ci.com/g/bestit/symfony-kitchensink-bundle/build-status/master)
-
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bestit/symfony-kitchensink-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bestit/symfony-kitchensink-bundle/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/bestit/symfony-kitchensink-bundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bestit/symfony-kitchensink-bundle/?branch=master)
 ## Usage
 
 This bundle provides you with a simple controller (**/kitchensink**) and service structure, to load a template, 
