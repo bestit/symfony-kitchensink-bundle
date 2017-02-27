@@ -5,7 +5,6 @@ namespace BestIt\KitchensinkBundle\DependencyInjection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 
-
 /**
  * Loading the bundle.
  * @author blange <lange@bestit-online.de>
@@ -26,6 +25,8 @@ class BestItKitchensinkExtension extends Extension
         $config = $this->processConfiguration(new Configuration(), $configs);
 
         $container->setAlias('best_it_kitchensink.data_provider', $config['data_provider']);
+
+        $container->setParameter('best_it_kitchensink.data_provider', $config['data_provider']);
         $container->setParameter('best_it_kitchensink.template', $config['template']);
     }
 }
