@@ -1,0 +1,3 @@
+kitchensink_index:
+    path:      /kitchensink
+    defaults:  { _controller: BestItKitchensinkBundle:Kitchensink:index }

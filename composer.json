@@ -1,0 +1,30 @@
+{
+    "name": "bestit/kitchensink-bundle",
+    "description": "Helps you create a kitchensink incl. route, template and services.",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Björn Lange",
+            "email": "lange@bestit-online.de"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "BestIt\\KitchensinkBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BestIt\\KitchensinkBundle\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^7.0",
+        "symfony/symfony": "^3.1"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^2.7",
+        "phpunit/phpunit": "^5.5"
+    }
+}
