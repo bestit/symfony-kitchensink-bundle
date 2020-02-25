@@ -1,0 +1,8 @@
+services:
+    BestIt\KitchensinkBundle\Controller\KitchensinkController:
+        class: BestIt\KitchensinkBundle\Controller\KitchensinkController
+        tags: ['controller.service_arguments']
+        arguments:
+            - '@best_it_kitchensink.data_provider'
+            - '@best_it_kitchensink.template_engine'
+            - '%best_it_kitchensink.template%'
