@@ -71,6 +71,6 @@ best_it_kitchensink:
 ```yaml
 # routing_dev.yml
 best_it_kitchensink:
-    resource: "@BestItKitchensinkBundle/resources/config/routing.yml"
+    resource: "@BestItKitchensinkBundle/Resources/config/routing.yml"
 ```
 

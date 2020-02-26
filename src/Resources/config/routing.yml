@@ -1,0 +1,3 @@
+kitchensink_index:
+    path:      /kitchensink
+    controller: BestIt\KitchensinkBundle\Controller\KitchensinkController::indexAction

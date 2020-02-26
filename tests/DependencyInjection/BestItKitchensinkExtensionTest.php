@@ -3,91 +3,70 @@
 namespace BestIt\KitchensinkBundle\Tests\DependencyInjection;
 
 use BestIt\KitchensinkBundle\DependencyInjection\BestItKitchensinkExtension;
-use BestIt\KitchensinkBundle\Tests\ContainerProviderTrait;
-use BestIt\KitchensinkBundle\Tests\DataProviderFake;
+use Exception;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Class BestItKitchensinkExtensionTest
+ *
  * @author blange <lange@bestit-online.de>
- * @category Tests
  * @package BestIt\KitchensinkBundle
- * @subpackage DependencyInjection
- * @version $id$
  */
 class BestItKitchensinkExtensionTest extends TestCase
 {
-    use ContainerProviderTrait;
-
     /**
-     * The used prefix in the bundle.
-     * @var string
-     */
-    const BUNDLE_PREFIX = 'best_it_kitchensink';
-
-    /**
-     * Returns some rules for the config value tests.
-     * @return array
-     */
-    public function getConfigValueAssertions(): array
-    {
-        return [
-            // key, wrong value, is required
-            ['data_provider', mt_rand(0, 1000), true],
-            ['template', null],
-        ];
-    }
-
-    /**
-     * Checks the config value.
-     * @dataProvider getConfigValueAssertions
-     * @param string $key
-     */
-    public function testConfigValue(string $key)
-    {
-        $config = $this->getFullConfig();
-
-        $container = $this->getFullyLoadedContainer($config);
-
-        static::assertTrue(
-            $container->hasParameter(self::BUNDLE_PREFIX . '.' . $key),
-            'Parameter is missing.'
-        );
-
-        static::assertSame(
-            $config[self::BUNDLE_PREFIX][$key],
-            $container->getParameter(self::BUNDLE_PREFIX . '.' . $key),
-            'Value was wrong.'
-        );
-    }
-
-    /**
-     * Checks if the data provider is loaded.
+     * Test container with all values
+     *
+     * @throws Exception Unknown errors
+     *
      * @return void
      */
-    public function testDataProviderInstance()
+    public function testContainer()
     {
-        $container = $this->getFullyLoadedContainer();
+        $extension = new BestItKitchensinkExtension();
+        $container = new ContainerBuilder();
 
-        static::assertTrue($container->hasAlias(self::BUNDLE_PREFIX . '.data_provider'));
-        static::assertInstanceOf(DataProviderFake::class, $container->get(self::BUNDLE_PREFIX . '.data_provider'));
+        $extension->load(
+            [
+                [
+                    'template' => $template = uniqid(),
+                    'data_provider' => $provider = uniqid(),
+                    'template_engine' => $engine = uniqid(),
+                ]
+            ],
+            $container
+        );
+
+        static::assertSame($template, $container->getParameter('best_it_kitchensink.template'));
+        static::assertTrue($container->hasAlias('best_it_kitchensink.template_engine'));
+        static::assertTrue($container->hasAlias('best_it_kitchensink.data_provider'));
     }
 
     /**
-     * Checks the default value of the template.
-     * @covers BestItKitchensinkExtension::load()
-     * @covers Configuration::getConfigTreeBuilder()
+     * Test missing data provider
+     *
+     * @throws Exception Unknown errors
+     *
      * @return void
      */
-    public function testTemplateDefaultValue()
+    public function testMissingProvider()
     {
-        $config = $this->getFullConfig();
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessageRegExp('/data_provider/');
 
-        unset($config[self::BUNDLE_PREFIX]['template']);
+        $extension = new BestItKitchensinkExtension();
+        $container = new ContainerBuilder();
 
-        $container = $this->getFullyLoadedContainer($config);
-
-        static::assertTrue($container->hasParameter(self::BUNDLE_PREFIX . '.template'));
-        static::assertSame('kitchensink/index.html.twig', $container->getParameter(self::BUNDLE_PREFIX . '.template'));
+        $extension->load(
+            [
+                [
+                    'template' => $template = uniqid(),
+                    'template_engine' => $engine = uniqid(),
+                ]
+            ],
+            $container
+        );
     }
 }
